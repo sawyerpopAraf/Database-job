@@ -1,0 +1,6 @@
+[
+    {"id":1,
+       "query":"INSERT INTO  ADOPTIONS (AnimalId) VALUES(8)"
+    }
+    
+]
