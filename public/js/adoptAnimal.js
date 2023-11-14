@@ -1,8 +1,17 @@
 function confirmAdoption(animalId) {
-    var userConfirm = confirm("Are you sure you want to adopt this animal?");
-    if (userConfirm) {
-        adoptAnimal(animalId);
-    }
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "Do you want to adopt this animal?",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, adopt it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            adoptAnimal(animalId);
+        }
+    });
 }
 
 function adoptAnimal(animalId) {
@@ -16,11 +25,21 @@ function adoptAnimal(animalId) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert("You have successfully adopted the animal!");
-            location.reload();
+            Swal.fire(
+                'Adopted!',
+                'You have successfully adopted the animal.',
+                'success'
+            ).then(() => {
+                location.reload();
+            });
         } else {
-            alert("Error adopting the animal. Please try again.");
+            Swal.fire(
+                'Error',
+                'Error adopting the animal. Please try again.',
+                'error'
+            );
         }
     });
 }
+
 

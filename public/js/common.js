@@ -1,83 +1,133 @@
-
-function updateSpecies(id){
-    newSpecies = prompt("Update species")
-    fetch('/species/update/'+id,{
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({id: id, newSpecies: newSpecies})
-     })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert("You have successfully updated the species!");
-                location.reload();
-            } else {
-                alert("Error updating the species. Please try again.");
+function updateSpecies(id) {
+    Swal.fire({
+        title: 'Update species',
+        input: 'text',
+        inputLabel: 'New species name',
+        showCancelButton: true,
+        inputValidator: (value) => {
+            if (!value) {
+                return 'You need to write something!';
             }
-        });
+        }
+    }).then((result) => {
+        if (result.isConfirmed && result.value) {
+            fetch('/species/update/' + id, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id: id, newSpecies: result.value })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire('Updated!', 'You have successfully updated the species!', 'success').then(() => {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire('Error', 'Error updating the species. Please try again.', 'error');
+                }
+            });
+        }
+    });
 }
 
-function deleteSpecies(id){
-    var userConfirm=confirm("Are you sure you want to delete this species?")
-    if(userConfirm){
-        fetch('/species/delete/'+id,{
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({id: id})
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert("You have successfully deleted the species!");
-                location.reload();
-            } else {
-                alert("Species already in used and cannot be deleted.");
-            }
-        });
-    }}
-
-function updateTemperament(id){
-    var temp = prompt("Update temperament")
-    fetch('/temperament/update/'+id,{
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({id: id, temp: temp})
-     })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert("You have successfully updated the temperament!");
-                location.reload();
-            } else {
-                alert("Error updating the temperament. Please try again.");
-            }
-        });
-
+function deleteSpecies(id) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: 'Do you want to delete this species?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch('/species/delete/' + id, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id: id })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire('Deleted!', 'You have successfully deleted the species!', 'success').then(() => {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire('Error', 'Species name belong to an animal in store, can not be deleted', 'error');
+                }
+            });
+        }
+    });
 }
 
-function deleteTemperament(id){
-    var userConfirm=confirm("Are you sure you want to delete this temperament?")
-    if(userConfirm){
-        fetch('/temperament/delete/'+id,{
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({id: id})
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert("You have successfully deleted the temperament!");
-                location.reload();
-            } else {
-                alert("Temperament already in used and cannot be deleted.");
+
+function updateTemperament(id) {
+    Swal.fire({
+        title: 'Update Temperament',
+        input: 'text',
+        inputLabel: 'New Temperament',
+        showCancelButton: true,
+        inputValidator: (value) => {
+            if (!value) {
+                return 'You need to write something!';
             }
-        });
-    }}
+        }
+    }).then((result) => {
+        if (result.isConfirmed && result.value) {
+            fetch('/temperament/update/' + id, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id: id, temp: result.value })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire('Updated!', 'You have successfully updated the temperament!', 'success').then(() => {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire('Error', 'Error updating the temperament. Please try again.', 'error');
+                }
+            });
+        }
+    });
+}
+
+
+function deleteTemperament(id) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: 'Do you want to delete this temperament?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch('/temperament/delete/' + id, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id: id })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire('Deleted!', 'You have successfully deleted the temperament!', 'success').then(() => {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire('Error', 'Temperament already in use and cannot be deleted.', 'error');
+                }
+            });
+        }
+    });
+}

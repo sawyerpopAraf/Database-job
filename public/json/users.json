@@ -1,11 +1,20 @@
 [
-    {"id":1,
-       "query":"INSERT INTO  USERS (FullName,UserName,Password,Role) VALUES('System admin','admin','admin1234','admin')"
+    {
+        "FullName": "System admin",
+        "UserName": "admin",
+        "Password": "admin1234",
+        "Role": "admin"
     },
-    {"id":2,
-    "query":"INSERT INTO  USERS (FullName,UserName,Password,Role) VALUES('User','User','user1234','member')"
-   },
-   {"id":3,
-   "query":"INSERT INTO  USERS (FullName,UserName,Password,Role) VALUES('User2','User2','User1234','member')"
+    {
+        "FullName": "User",
+        "UserName": "User",
+        "Password": "user1234",
+        "Role": "member"
+    },
+    {
+        "FullName": "User2",
+        "UserName": "User2",
+        "Password": "User1234",
+        "Role": "member"
     }
 ]

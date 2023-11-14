@@ -6,6 +6,10 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/stylesheets/styles.css">
   <script src="../js/common.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="../js/buttonAlert.js"></script>
+
+
 
 </head>
 
@@ -33,8 +37,8 @@
                   <button class="btn-sm btn-danger" onclick="deleteTemperament( <%=temp.id%>)">Delete Temperament</button>
 
                   <% } else { %>
-                    <button class="btn-sm btn-warning" onclick="alert('You are not authorized to update species.')">Update species</button>
-                    <button class="btn-sm btn-danger" onclick="alert('You are not authorized to update species.')">Delete species</button> 
+                    <button class="btn-sm btn-warning" onclick="adminOnly()">Update species</button>
+                    <button class="btn-sm btn-danger" onclick="adminOnly()">Delete species</button> 
                     <% } %>
              
               </span>
@@ -45,11 +49,11 @@
                 <div class="col-4"></div>
                 <div class="col-4 text-center mt-2">
                     <form action="/temperament/add" method="POST" enctype="application/x-www-form-urlencoded">
-                        <% if(user && user.username == 'admin') { %>
+                        <% if(user && user.role == 'admin') { %>
                         <input type="text" name="temp" placeholder="Enter temperament name" required>
                         <button class="btn btn-success" id="btn-add-animal">Add New Temperament</button>
                         <% } else { %>
-                        <button type="button" class="btn-sm btn-warning" onclick="alert('You are not authorized to add temperament.')">Cannot Add temperament</button>
+                        <button type="button" class="btn-sm btn-warning" onclick="adminOnly()">Cannot Add temperament</button>
                         <% } %>
                     </form>
                 </div>
