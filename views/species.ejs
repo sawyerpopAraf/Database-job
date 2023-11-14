@@ -27,7 +27,7 @@
                 <%=species.Name%>
               </span>
               <span class="col py-1 bg-light text-center">
-                <% if(user&&user.username=='admin') { %>
+                <% if(user&&user.role=='admin') { %>
                   <button class="btn-sm btn-warning" onclick="updateSpecies( <%=species.id%>)">Update species</button>
                   <button class="btn-sm btn-danger" onclick="deleteSpecies( <%=species.id%>)">Delete species</button>
 
@@ -44,7 +44,7 @@
                 <div class="col-4"></div>
                 <div class="col-4 text-center mt-2">
                     <form action="/species/add" method="POST" enctype="application/x-www-form-urlencoded">
-                        <% if(user && user.username == 'admin') { %>
+                        <% if(user && user.role == 'admin') { %>
                         <input type="text" name="species" placeholder="Enter species name" required>
                         <button class="btn btn-success" id="btn-add-animal">Add New Species</button>
                         <% } else { %>

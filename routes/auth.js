@@ -7,22 +7,34 @@ var UserService = require("../service/UserService")
 var userService = new UserService(db);
 
 passport.use(new LocalStrategy(function verify(username, password, cb) {
-  userService.getOneByName(username).then((data) => {
-    if(data === null) {
-      return cb(null, false, { message: 'Incorrect username or password.' });
-    }
-    if (password !== data.Password) {
+  userService.getOneByName(username).then((user) => {
+    if (user === null) {
       return cb(null, false, { message: 'Incorrect username or password.' });
     }
     
-    return cb(null, data);
-  });
+    // Split the stored password into the salt and the hashed part
+    const [salt, storedHashedPassword] = user.Password.split('$');
+    
+    // Hash the incoming password with the same salt
+    crypto.pbkdf2(password, salt, 310000, 32, 'sha256', function(err, hashedPassword) {
+      if (err) { return cb(err); }
+      
+      // Compare the hashed password with the stored hashed password
+      if (hashedPassword.toString('hex') !== storedHashedPassword) {
+        return cb(null, false, { message: 'Incorrect username or password.' });
+      }
+      
+      // If the passwords match, proceed with the login process
+      return cb(null, user);
+    });
+  }).catch(err => cb(err));
 }));
+
 
 
 passport.serializeUser(function(user, cb) {
   process.nextTick(function() {
-    cb(null, { id: user.id, username: user.UserName });
+    cb(null, { id: user.id, username: user.UserName,role:user.Role });
   });
 });
 
@@ -56,12 +68,27 @@ router.get('/signup', function(req, res, next) {
 });
 
 router.post('/signup', function(req, res, next) {
-  var salt = crypto.randomBytes(16);
+  const fullname = req.body.firstname + " " + req.body.lastname;
+  const salt = crypto.randomBytes(16).toString('hex'); 
+
   crypto.pbkdf2(req.body.password, salt, 310000, 32, 'sha256', function(err, hashedPassword) {
     if (err) { return next(err); }
-    userService.create(req.body.firstname, req.body.lastname, req.body.username, salt, hashedPassword )
-    res.redirect('/login');
+    const passwordCombined = `${salt}$${hashedPassword.toString('hex')}`;
+    
+    userService.create(fullname, req.body.username, passwordCombined, 'member')
+      .then(() => {
+        res.redirect('/login');
+      })
+      .catch(error => {
+        if (error.message === 'User already exists') {
+          res.status(409).json({ error: 'Username already exists. Please choose a different one.' });
+          
+        } else {
+          next(error);
+        }
+      }); 
   });
 });
+
 
 module.exports = router;

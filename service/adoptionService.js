@@ -7,6 +7,7 @@ class AdoptionService {
     }
 
     async getAdoptionDetails() {
+        // raw query
         const query = `
            SELECT Users.UserName, Animals.Name
            FROM Adoptions 

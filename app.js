@@ -9,8 +9,12 @@ var db = require("./models");
 var passport = require('passport');
 var session = require('express-session');
 var SQLiteStore = require('connect-sqlite3')(session);
+var populateAllTables  = require('./service/populateDatabase');
 
-db.sequelize.sync({ force: false })
+db.sequelize.sync({ force: false }).then(() => {
+  populateAllTables(); // Populate tables after syncing
+});
+
 
 
 var indexRouter = require('./routes/index');

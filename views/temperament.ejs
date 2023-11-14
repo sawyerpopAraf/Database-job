@@ -28,7 +28,7 @@
                 <%=temp.Temperament%>
               </span>
               <span class="col py-1 bg-light text-center">
-                <% if(user&&user.username=='admin') { %>
+                <% if(user&&user.role=='admin') { %>
                   <button class="btn-sm btn-warning" onclick="updateTemperament( <%=temp.id%>)">Update Temperament</button>
                   <button class="btn-sm btn-danger" onclick="deleteTemperament( <%=temp.id%>)">Delete Temperament</button>
 

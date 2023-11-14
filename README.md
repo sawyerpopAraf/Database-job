@@ -1,8 +1,11 @@
+1. This is a project that using Mysql database, before doing anything, download the Mysql workbench and create the database,you can call it whatever name you want , just to include it in your local .env file. 
 
-# Application Installation and Usage Instructions
-Run `node service/populateDatabase` to populate the data into the database table. Before doing this, please delete the `createdAt` and `updatedAt` columns from the `AnimalTemperament` table or remove the 'NN' option.
+2.When starting the app , some initial data records will be added automatically to the database , then be showen at the front-end.
 
-All functions have been tested. On the Animals page, after clicking one of the buttons at the top (e.g., 'All Adoption Details', 'Animals by Age', etc.), you can simply click the "ALL ANIMALS" button to return to the original view.
+3. There are 3 predefined users, one of them is "admin" with password "admin1234", only admin can complete tasks such as deleting an adoption , adding species, adding temerament and so on. 
+
+4. All functions have been tested. On the Animals page, after clicking one of the buttons at the top (e.g., 'All Adoption Details', 'Animals by Age', etc.), you can simply click the "ALL ANIMALS" button to return to the original view.
+
 
 
 # Environment Variables 1
@@ -20,16 +23,9 @@ Nodemon, sequelize, mysql,mysql2, dotenv. passport, passport-local,express-sessi
 # NodeJS Version Used
 v18.16.0
 
-# DATABASE
-CREATE SCHEMA adoptiondb
 
-# DATAINSERTS
-Run node service/populateDatabase to populate data into the database table. Before doing so, delete the createdAt and updatedAt columns from the AnimalTemperament table(or take out the NN option).
 
-# DATABASEACCESS
-CREATE ROLE 'database owner';
-GRANT ALL PRIVILEGES ON adoptiondb.* TO 'database owner';
-CREATE USER 'dabcaowner'@'%' IDENTIFIED BY 'dabca1234';
-GRANT 'database owner' TO 'dabcaowner'@'%';
+
+
 
 

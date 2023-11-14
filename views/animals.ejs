@@ -25,7 +25,7 @@
           <button class="btn btn-primary" id="animalsByAge" style="margin-right: 20px;">Animals By Age </button>
           <button class="btn btn-primary" id="birthdayDateRange"    style="margin-right: 20px;">Animals born in date range</button>
           
-          <% if (user && user.username == "admin") { %>
+          <% if (user && user.role == "admin") { %>
               <button class="btn btn-primary" id="size"style="margin-right: 20px;">Number of Animals Per Size</button>
           <% } else { %>
               <button class="btn btn-primary" style="margin-right: 20px;" onclick="alert('Only admin have access')">Number of Animals Per Size</button>
@@ -88,7 +88,7 @@
                 <button class="btn-sm btn-warning" onclick="alert('You must be logged in to adopt an animal.')">Adopt</button>
             <% } %>
         
-            <% if (user && user.username == "admin") { %>
+            <% if (user && user.role == "admin") { %>
                 <% if (animal.Adopted) { %>
                     <button class="btn-sm btn-danger" onclick="confirmToDelete(<%=animal.id%>)">Cancel Adoption</button>
                 <% } else { %>

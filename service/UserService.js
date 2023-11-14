@@ -7,16 +7,29 @@ class UserService {
         
     }
 
-    async create(fullname, username, password, role) {
-        return this.User.create(
-            {
+    async create(fullname, username, passwordCombined, role) {
+        try {
+            const existingUser = await this.User.findOne({
+                where: { UserName: username }
+            });
+            
+            if (existingUser) {
+                throw new Error("User already exists");
+            }
+    
+            const newUser = await this.User.create({
                 FullName: fullname,
                 UserName: username,
-                Password: password,
-                Role: role
-            }
-        ) 
+                Password: passwordCombined,
+                Role: role || "member"
+            });
+            return newUser;
+        } 
+        catch (error) {
+            throw error;
+        }
     }
+    
 
     async getAll() {
         return this.User.findAll({
