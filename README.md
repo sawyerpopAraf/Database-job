@@ -1,5 +1,7 @@
+This is a web application for animal adoption. The backend server is built with JavaScript and Node.js, and it connects to a MySQL database.
+
 1.
-This project utilizes a MySQL database. Before proceeding, please download MySQL Workbench and create a database. You can name it as you wish; just ensure to include this name in your local .env file.
+Before proceeding, please download MySQL Workbench and create a database. You can name it as you wish; just ensure to include this name in your local .env file.
 
 2.
 When starting the app, some initial data records will be automatically added to the database and then displayed on the front-end.
